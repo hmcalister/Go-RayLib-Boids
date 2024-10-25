@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	BOID_INIT_VELOCITY_STD float64 = 1.0
+	BOID_INIT_VELOCITY_MAX_MAGNITUDE float32 = 1.0
 )
 
 type Boid struct {
