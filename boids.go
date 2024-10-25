@@ -1,6 +1,7 @@
 package main
 
 import (
+	"image/color"
 	"log/slog"
 	"time"
 
@@ -10,6 +11,10 @@ import (
 
 const (
 	BOID_INIT_VELOCITY_MAX_MAGNITUDE float32 = 1.0
+)
+
+var (
+	BOID_COLOR color.RGBA = rl.White
 )
 
 type Boid struct {
