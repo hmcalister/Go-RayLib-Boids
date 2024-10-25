@@ -29,6 +29,7 @@ func main() {
 	for !rl.WindowShouldClose() {
 		rl.ClearBackground(rl.Black)
 
+		manager.TickBoids()
 		for _, b := range manager.Boids {
 			b.DrawBoid()
 		}
