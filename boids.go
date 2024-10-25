@@ -7,6 +7,10 @@ import (
 	"golang.org/x/exp/rand"
 )
 
+const (
+	BOID_INIT_VELOCITY_STD float64 = 1.0
+)
+
 type CartesianVector2 struct {
 	X float64
 	Y float64
@@ -38,7 +42,14 @@ func NewBoidManager(config Config) BoidManager {
 	manager.Boids = make([]*Boid, config.NumBoids)
 	for i := range config.NumBoids {
 		manager.Boids[i] = &Boid{
-			Position: CartesianVector2{},
+			Position: CartesianVector2{
+				manager.randomGenerator.Float64() * float64(config.WindowWidth),
+				manager.randomGenerator.Float64() * float64(config.WindowHeight),
+			},
+			Velocity: CartesianVector2{
+				manager.randomGenerator.NormFloat64() * BOID_INIT_VELOCITY_STD,
+				manager.randomGenerator.NormFloat64() * BOID_INIT_VELOCITY_STD,
+			},
 		}
 	}
 
