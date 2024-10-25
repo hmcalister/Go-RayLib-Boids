@@ -31,9 +31,7 @@ func main() {
 		rl.ClearBackground(rl.Black)
 
 		manager.TickBoids()
-		for _, b := range manager.Boids {
-			b.DrawBoid(config.BoidSideLength, config.BoidSideAngle)
-		}
+		manager.DrawBoids()
 
 		rl.DrawRectangle(0, 0, 128, 32, rl.White)
 		rl.DrawText(fmt.Sprintf("FPS: %.2f", 1/rl.GetFrameTime()), 5, 5, 24, rl.Black)

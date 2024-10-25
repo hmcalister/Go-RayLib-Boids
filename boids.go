@@ -72,6 +72,12 @@ func NewBoidManager(config Config) BoidManager {
 	return manager
 }
 
+func (manager *BoidManager) DrawBoids() {
+	for _, b := range manager.Boids {
+		b.DrawBoid(manager.config.BoidSideLength, manager.config.BoidSideAngle)
+	}
+}
+
 func (manager *BoidManager) TickBoids() {
 	indexChannel := make(chan int)
 	updatedBoids := make([]Boid, len(manager.Boids))
