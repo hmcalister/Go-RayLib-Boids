@@ -3,6 +3,7 @@ package main
 import (
 	"image/color"
 	"log/slog"
+	"sync"
 	"time"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -34,8 +35,9 @@ func (b *Boid) DrawBoid() {
 }
 
 type BoidManager struct {
-	Boids           []*Boid
+	Boids           []Boid
 	randomGenerator *rand.Rand
+	numWorkers      int
 }
 
 // Create a new BoidManager, which in turn makes a number of new Boids.
@@ -51,9 +53,9 @@ func NewBoidManager(config Config) BoidManager {
 	}
 	manager.randomGenerator = rand.New(rand.NewSource(config.RandomSeed))
 
-	manager.Boids = make([]*Boid, config.NumBoids)
+	manager.Boids = make([]Boid, config.NumBoids)
 	for i := range config.NumBoids {
-		manager.Boids[i] = &Boid{
+		manager.Boids[i] = Boid{
 			Position: rl.NewVector2(
 				manager.randomGenerator.Float32()*float32(config.WindowWidth),
 				manager.randomGenerator.Float32()*float32(config.WindowHeight),
@@ -67,8 +69,40 @@ func NewBoidManager(config Config) BoidManager {
 		slog.Debug("boid initialized", "boidIndex", i, "boidData", manager.Boids[i])
 	}
 
+	manager.numWorkers = config.NumWorkers
+
 	return manager
 }
 
+func (manager *BoidManager) TickBoids() {
+	indexChannel := make(chan int)
+	updatedBoids := make([]Boid, len(manager.Boids))
 
+	var workerWaitGroup sync.WaitGroup
+	for range manager.numWorkers {
+		workerWaitGroup.Add(1)
+		go func() {
+			defer workerWaitGroup.Done()
+			tickBoidWorkerFunc(manager.Boids, updatedBoids, indexChannel)
+		}()
+	}
+
+	for i := range len(manager.Boids) {
+		indexChannel <- i
+	}
+	close(indexChannel)
+	workerWaitGroup.Wait()
+
+	// After workers are complete, updatedBoids contains the ticked boids.
+	// We can replace the public Boids list immediately
+
+	manager.Boids = updatedBoids
+}
+
+func tickBoidWorkerFunc(currentBoids []Boid, updatedBoids []Boid, indexChannel chan int) {
+	for updateIndex := range indexChannel {
+		targetBoid := currentBoids[updateIndex]
+		targetBoid.Position = rl.Vector2Add(targetBoid.Position, targetBoid.Velocity)
+		updatedBoids[updateIndex] = targetBoid
+	}
 }
