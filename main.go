@@ -24,10 +24,16 @@ func main() {
 	defer rl.CloseWindow()
 	rl.SetTargetFPS(60)
 
+	manager := NewBoidManager(config)
+
 	for !rl.WindowShouldClose() {
 		rl.ClearBackground(rl.Black)
+
+		for _, b := range manager.Boids {
+			b.DrawBoid()
+		}
+
 		rl.EndDrawing()
 	}
 
-	_ = NewBoidManager(config.NumBoids, config.RandomSeed)
 }
