@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
@@ -33,6 +34,9 @@ func main() {
 		for _, b := range manager.Boids {
 			b.DrawBoid()
 		}
+
+		rl.DrawRectangle(0, 0, 128, 32, rl.White)
+		rl.DrawText(fmt.Sprintf("FPS: %.2f", 1/rl.GetFrameTime()), 5, 5, 24, rl.Black)
 
 		rl.EndDrawing()
 	}
