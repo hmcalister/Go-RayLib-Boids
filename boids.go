@@ -11,11 +11,6 @@ const (
 	BOID_INIT_VELOCITY_STD float64 = 1.0
 )
 
-type CartesianVector2 struct {
-	X float64
-	Y float64
-}
-
 type Boid struct {
 	Position CartesianVector2
 	Velocity CartesianVector2
