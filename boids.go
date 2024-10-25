@@ -14,7 +14,9 @@ const (
 )
 
 var (
-	BOID_COLOR color.RGBA = rl.White
+	BOID_COLOR       color.RGBA = rl.White
+	BOID_SIDE_LENGTH float32    = 16.0
+	BOID_SIDE_ANGLE  float32    = 2.8
 )
 
 type Boid struct {
