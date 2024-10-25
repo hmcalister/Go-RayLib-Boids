@@ -1,5 +1,5 @@
-WindowWidth: 800
-WindowHeight: 600
-NumBoids: 100
-NumWorkers: 1
+WindowWidth: 1600
+WindowHeight: 1000
+NumBoids: 256
+NumWorkers: 12
 RandomSeed: 0
