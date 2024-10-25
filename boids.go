@@ -4,6 +4,7 @@ import (
 	"log/slog"
 	"time"
 
+	rl "github.com/gen2brain/raylib-go/raylib"
 	"golang.org/x/exp/rand"
 )
 
@@ -12,8 +13,8 @@ const (
 )
 
 type Boid struct {
-	Position CartesianVector2
-	Velocity CartesianVector2
+	Position rl.Vector2
+	Velocity rl.Vector2
 }
 
 type BoidManager struct {
