@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"errors"
@@ -65,6 +65,8 @@ func ParseConfigFile(configFilePath string) (Config, error) {
 	}
 
 	// --------------------------------------------------------------------------------
+
+	slog.Debug("loaded config data", "config", config)
 
 	return config, nil
 }

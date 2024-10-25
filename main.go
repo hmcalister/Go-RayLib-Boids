@@ -6,6 +6,8 @@ import (
 	"os"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
+	"github.com/hmcalister/Go-RayLib-Boids/boids"
+	"github.com/hmcalister/Go-RayLib-Boids/config"
 )
 
 func main() {
@@ -16,7 +18,7 @@ func main() {
 	flag.Parse()
 	setupLogging(*slogLevelFlag, *slogFormatFlag, *rlLogLevelFlag)
 
-	config, err := ParseConfigFile(*configFilePath)
+	config, err := config.ParseConfigFile(*configFilePath)
 	if err != nil {
 		os.Exit(1)
 	}
@@ -25,7 +27,7 @@ func main() {
 	defer rl.CloseWindow()
 	rl.SetTargetFPS(60)
 
-	manager := NewBoidManager(config)
+	manager := boids.NewBoidManager(config)
 
 	for !rl.WindowShouldClose() {
 		rl.ClearBackground(rl.Black)
