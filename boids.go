@@ -33,4 +33,7 @@ func NewBoidManager(numBoids int, randomSeed uint64) BoidManager {
 		randomSeed = uint64(time.Now().UnixMicro())
 		slog.Info("randomSeed set based on timestamp", "randomSeed", randomSeed)
 	}
+	manager.randomGenerator = rand.New(rand.NewSource(randomSeed))
+
+	return manager
 }
