@@ -19,3 +19,8 @@ type BoidManager struct {
 	randomGenerator *rand.Rand
 }
 
+// Create a new BoidManager, which in turn makes a number of new Boids.
+// randomSeed is used to initialize the Boids. If passed randomSeed is exactly 0 then a new seed is generated based on the timestamp.
+// Boids are initialized randomly with both velocity and position.
+func NewBoidManager(numBoids int, randomSeed uint64) BoidManager {
+}
