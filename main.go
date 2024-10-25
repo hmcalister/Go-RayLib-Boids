@@ -28,4 +28,6 @@ func main() {
 		rl.ClearBackground(rl.Black)
 		rl.EndDrawing()
 	}
+
+	_ = NewBoidManager(config.NumBoids, config.RandomSeed)
 }
