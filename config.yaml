@@ -1,3 +1,5 @@
+WindowWidth: 800
+WindowHeight: 600
 NumBoids: 100
 NumWorkers: 1
 RandomSeed: 0
