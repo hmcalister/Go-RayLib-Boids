@@ -15,9 +15,7 @@ const (
 )
 
 var (
-	BOID_COLOR       color.RGBA = rl.White
-	BOID_SIDE_LENGTH float32    = 8.0
-	BOID_SIDE_ANGLE  float32    = 2.3
+	BOID_COLOR color.RGBA = rl.White
 )
 
 type Boid struct {
@@ -25,10 +23,10 @@ type Boid struct {
 	Velocity rl.Vector2
 }
 
-func (b *Boid) DrawBoid() {
-	side := rl.Vector2Scale(rl.Vector2Normalize(b.Velocity), BOID_SIDE_LENGTH)
-	v2 := rl.Vector2Add(rl.Vector2Rotate(side, -BOID_SIDE_ANGLE), b.Position)
-	v3 := rl.Vector2Add(rl.Vector2Rotate(side, BOID_SIDE_ANGLE), b.Position)
+func (b *Boid) DrawBoid(sideLength, angle float32) {
+	side := rl.Vector2Scale(rl.Vector2Normalize(b.Velocity), sideLength)
+	v2 := rl.Vector2Add(rl.Vector2Rotate(side, -angle), b.Position)
+	v3 := rl.Vector2Add(rl.Vector2Rotate(side, angle), b.Position)
 	rl.DrawTriangle(rl.Vector2Add(b.Position, side), v2, v3, BOID_COLOR)
 
 	// rl.DrawCircle(int32(b.Position.X), int32(b.Position.Y), 3, rl.Blue)
@@ -37,7 +35,7 @@ func (b *Boid) DrawBoid() {
 type BoidManager struct {
 	Boids           []Boid
 	randomGenerator *rand.Rand
-	numWorkers      int
+	config          Config
 }
 
 // Create a new BoidManager, which in turn makes a number of new Boids.
@@ -69,7 +67,7 @@ func NewBoidManager(config Config) BoidManager {
 		slog.Debug("boid initialized", "boidIndex", i, "boidData", manager.Boids[i])
 	}
 
-	manager.numWorkers = config.NumWorkers
+	manager.config.NumWorkers = config.NumWorkers
 
 	return manager
 }
@@ -79,7 +77,7 @@ func (manager *BoidManager) TickBoids() {
 	updatedBoids := make([]Boid, len(manager.Boids))
 
 	var workerWaitGroup sync.WaitGroup
-	for range manager.numWorkers {
+	for range manager.config.NumWorkers {
 		workerWaitGroup.Add(1)
 		go func() {
 			defer workerWaitGroup.Done()
