@@ -38,14 +38,14 @@ func NewBoidManager(config Config) BoidManager {
 	manager.Boids = make([]*Boid, config.NumBoids)
 	for i := range config.NumBoids {
 		manager.Boids[i] = &Boid{
-			Position: CartesianVector2{
-				manager.randomGenerator.Float64() * float64(config.WindowWidth),
-				manager.randomGenerator.Float64() * float64(config.WindowHeight),
-			},
-			Velocity: CartesianVector2{
-				manager.randomGenerator.NormFloat64() * BOID_INIT_VELOCITY_STD,
-				manager.randomGenerator.NormFloat64() * BOID_INIT_VELOCITY_STD,
-			},
+			Position: rl.NewVector2(
+				manager.randomGenerator.Float32()*float32(config.WindowWidth),
+				manager.randomGenerator.Float32()*float32(config.WindowHeight),
+			),
+			Velocity: rl.NewVector2(
+				(2*manager.randomGenerator.Float32()-1)*BOID_INIT_VELOCITY_MAX_MAGNITUDE,
+				(2*manager.randomGenerator.Float32()-1)*BOID_INIT_VELOCITY_MAX_MAGNITUDE,
+			),
 		}
 
 		slog.Debug("boid initialized", "boidIndex", i, "boid", manager.Boids[i])
