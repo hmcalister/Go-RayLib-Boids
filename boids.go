@@ -60,3 +60,10 @@ func NewBoidManager(config Config) BoidManager {
 
 	return manager
 }
+
+func (b *Boid) DrawBoid() {
+	side := rl.Vector2Scale(rl.Vector2Normalize(b.Velocity), BOID_SIDE_LENGTH)
+	v2 := rl.Vector2Add(rl.Vector2Rotate(side, -BOID_SIDE_ANGLE), b.Position)
+	v3 := rl.Vector2Add(rl.Vector2Rotate(side, BOID_SIDE_ANGLE), b.Position)
+	rl.DrawTriangle(b.Position, v2, v3, BOID_COLOR)
+}
