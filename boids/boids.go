@@ -19,7 +19,7 @@ type boid struct {
 	velocity rl.Vector2
 }
 
-func (b *boid) drawBoid(sideLength, angle float32) {
+func (b boid) draw(sideLength, angle float32) {
 	side := rl.Vector2Scale(rl.Vector2Normalize(b.velocity), sideLength)
 	v2 := rl.Vector2Add(rl.Vector2Rotate(side, -angle), b.position)
 	v3 := rl.Vector2Add(rl.Vector2Rotate(side, angle), b.position)
