@@ -1,0 +1,3 @@
+NumBoids: 100
+NumWorkers: 1
+RandomSeed: 0
