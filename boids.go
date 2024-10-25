@@ -9,3 +9,8 @@ type CartesianVector2 struct {
 	Y float64
 }
 
+type Boid struct {
+	Position CartesianVector2
+	Velocity CartesianVector2
+}
+
