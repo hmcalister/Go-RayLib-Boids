@@ -32,7 +32,7 @@ func main() {
 
 		manager.TickBoids()
 		for _, b := range manager.Boids {
-			b.DrawBoid()
+			b.DrawBoid(config.BoidSideLength, config.BoidSideAngle)
 		}
 
 		rl.DrawRectangle(0, 0, 128, 32, rl.White)
