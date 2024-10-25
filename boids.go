@@ -51,6 +51,8 @@ func NewBoidManager(config Config) BoidManager {
 				manager.randomGenerator.NormFloat64() * BOID_INIT_VELOCITY_STD,
 			},
 		}
+
+		slog.Debug("boid initialized", "boidIndex", i, "boid", manager.Boids[i])
 	}
 
 	return manager
