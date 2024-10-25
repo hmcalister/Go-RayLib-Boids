@@ -14,6 +14,9 @@ type Config struct {
 }
 
 func ParseConfigFile(configFilePath string) (Config, error) {
+	slog.Debug("start loading of config file", "configFilePath", configFilePath)
+
+	slog.Debug("open and read config file")
 	config := Config{}
 	configFile, err := os.ReadFile(configFilePath)
 	if err != nil {
@@ -21,6 +24,7 @@ func ParseConfigFile(configFilePath string) (Config, error) {
 		return config, err
 	}
 
+	slog.Debug("unmarshal config file buffer to Config struct")
 	err = yaml.Unmarshal(configFile, &config)
 	if err != nil {
 		slog.Error("error unmarshalling config file", "configFilePath", configFilePath, "error", err)
