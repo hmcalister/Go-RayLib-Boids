@@ -2,8 +2,9 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"os"
+
+	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 func main() {
@@ -18,5 +19,8 @@ func main() {
 	if err != nil {
 		os.Exit(1)
 	}
-	fmt.Printf("%+v\n", config)
+
+	rl.InitWindow(config.WindowWidth, config.WindowHeight, "Boids")
+	defer rl.CloseWindow()
+	rl.SetTargetFPS(60)
 }
