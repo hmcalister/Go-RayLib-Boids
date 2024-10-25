@@ -52,7 +52,7 @@ func NewBoidManager(config config.Config) BoidManager {
 
 func (manager *BoidManager) DrawBoids() {
 	for _, b := range manager.Boids {
-		b.drawBoid(manager.config.BoidSideLength, manager.config.BoidSideAngle)
+		b.draw(manager.config.BoidSideLength, manager.config.BoidSideAngle)
 	}
 }
 
