@@ -55,7 +55,7 @@ func NewBoidManager(config Config) BoidManager {
 			),
 		}
 
-		slog.Debug("boid initialized", "boidIndex", i, "boid", manager.Boids[i])
+		slog.Debug("boid initialized", "boidIndex", i, "boidData", manager.Boids[i])
 	}
 
 	return manager
