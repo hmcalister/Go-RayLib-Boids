@@ -14,3 +14,8 @@ type Boid struct {
 	Velocity CartesianVector2
 }
 
+type BoidManager struct {
+	Boids           []*Boid
+	randomGenerator *rand.Rand
+}
+
