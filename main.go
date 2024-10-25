@@ -23,4 +23,9 @@ func main() {
 	rl.InitWindow(config.WindowWidth, config.WindowHeight, "Boids")
 	defer rl.CloseWindow()
 	rl.SetTargetFPS(60)
+
+	for !rl.WindowShouldClose() {
+		rl.ClearBackground(rl.Black)
+		rl.EndDrawing()
+	}
 }
