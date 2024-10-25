@@ -19,3 +19,6 @@ func (v CartesianVector2) Normalize() CartesianVector2 {
 	}
 }
 
+func (v CartesianVector2) DotProduct(u CartesianVector2) float64 {
+	return v.X*u.X + v.Y*u.Y
+}
