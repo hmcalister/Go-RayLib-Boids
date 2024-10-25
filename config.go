@@ -17,7 +17,7 @@ type Config struct {
 }
 
 func ParseConfigFile(configFilePath string) (Config, error) {
-	slog.Debug("start loading of config file", "configFilePath", configFilePath)
+	slog.Info("loading config file", "configFilePath", configFilePath)
 
 	slog.Debug("open and read config file")
 	config := Config{}
