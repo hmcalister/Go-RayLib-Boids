@@ -2,6 +2,8 @@
 
 An implementation of Boids using Go and the [RayLib bindings](https://github.com/gen2brain/raylib-go).
 
+![An example screenshot of the program](images/example.png)
+
 ## Running the Project
 
 Once you have an executable, the functionality of the program is entirely determined through the `config.yaml` file. The config file give in this repository has some good defaults, but feel free to play around with these! The config parameters are:
