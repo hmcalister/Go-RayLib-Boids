@@ -13,6 +13,12 @@ import (
 const (
 	BOID_INIT_VELOCITY_MAX_MAGNITUDE float32 = 3.0
 )
+
+var (
+	x_HAT rl.Vector2 = rl.NewVector2(1.0, 0.0)
+	y_HAT rl.Vector2 = rl.NewVector2(0.0, 1.0)
+)
+
 type BoidManager struct {
 	Boids           []boid
 	randomGenerator *rand.Rand
