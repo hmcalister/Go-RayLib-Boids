@@ -169,6 +169,11 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(delPositionToCenterOfMassUnitVector, COHESION_COEFFICIENT))
 		}
 
+		// --------------------------------------------------------------------------------
+		// Decay velocity (down to a point)
+
+		targetBoid.velocity = rl.Vector2Lerp(targetBoid.velocity, rl.Vector2Scale(rl.Vector2Normalize(targetBoid.velocity), BOID_INIT_VELOCITY_MAX_MAGNITUDE), 0.05)
+
 		targetBoid.position = rl.Vector2Add(targetBoid.position, targetBoid.velocity)
 		updatedBoids[updateIndex] = targetBoid
 	}
