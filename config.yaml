@@ -4,8 +4,8 @@ NumBoids: 2048                          # The number of boids to spawn
 BoidVelocity: 4.0                       # The target velocity of each boid
 BoidVision: 128.0                       # The distance that boids can see, in pixels --- larger visions make for more stable emergent flocks
 BoidSeparationOptimalProximity: 0.05    # The proximity measure boids aim for --- a proximity of 1.0 is as close as possible
-BoidSeparationCoefficient: 0.75         # How strongly boids weight Separation --- Determines how separated boids should be
+BoidSeparationCoefficient: 0.95         # How strongly boids weight Separation --- Determines how separated boids should be
 BoidAlignmentCoefficient: 0.15          # How strongly boids weight Alignment --- Determines how aligned boids should be, makes boids fly in the same direction
-BoidCohesionCoefficient: 0.05           # How strongly boids weight Cohesion --- Determines how cohesive boids should be, makes boids steer towards other boids
+BoidCohesionCoefficient: 0.0            # How strongly boids weight Cohesion --- Determines how cohesive boids should be, makes boids steer towards other boids
 NumWorkers: 12                          # The number of worker goroutines to use --- more go routines means faster frames, but requires more resources
 RandomSeed: 0                           # The random seed used for initialization --- use 0 for a random seed based on the timestamp
