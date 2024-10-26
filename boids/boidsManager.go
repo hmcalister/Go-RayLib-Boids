@@ -96,7 +96,9 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 	for updateIndex := range indexChannel {
 		targetBoid := currentBoids[updateIndex]
 
+		// --------------------------------------------------------------------------------
 		// Avoid flying off screen
+
 		if targetBoid.position.X < WINDOW_EDGE_BUFFER_DISTANCE {
 			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(x_HAT, windowEdgeSpringConstant*(WINDOW_EDGE_BUFFER_DISTANCE-targetBoid.position.X)))
 		} else if targetBoid.position.X > float32(config.WindowWidth)-WINDOW_EDGE_BUFFER_DISTANCE {
