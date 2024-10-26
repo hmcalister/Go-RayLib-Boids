@@ -153,6 +153,11 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 
 			targetBoid.velocity = rl.Vector2Lerp(targetBoid.velocity, otherBoid.velocity, ALIGNMENT_COEFFICIENT)
 
+			// --------------------------------------------------------------------------------
+			// Cohesion (Calculated)
+
+			numProximalBoids += 1.0
+			centerOfMassOfProximalBoids = rl.Vector2Add(centerOfMassOfProximalBoids, otherBoid.position)
 		}
 
 		targetBoid.position = rl.Vector2Add(targetBoid.position, targetBoid.velocity)
