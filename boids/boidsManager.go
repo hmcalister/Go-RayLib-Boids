@@ -145,7 +145,10 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 			// --------------------------------------------------------------------------------
 			// Separation
 
-			// --------------------------------------------------------------------------------'
+			delPositionUnitVector := rl.Vector2Normalize(rl.Vector2Subtract(otherBoid.position, targetBoid.position))
+			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(delPositionUnitVector, SEPARATION_COEFFICIENT*(SEPARATION_OPTIMAL_PROXIMITY_MEASURE-proximity)))
+
+			// --------------------------------------------------------------------------------
 			// Alignment
 
 			// --------------------------------------------------------------------------------'
