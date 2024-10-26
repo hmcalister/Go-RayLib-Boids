@@ -178,3 +178,15 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 		updatedBoids[updateIndex] = targetBoid
 	}
 }
+
+// Calculate the proximity of two boids with position p1, p2.
+// The measure is bound between 0 and 1.
+// 0 means the boids are not near one another, 1 means the boids are at the same position.
+func boidProximityMeasure(p1, p2 rl.Vector2) float32 {
+
+	delX := (p1.X - p2.X) * (p1.X - p2.X)
+	delY := (p1.Y - p2.Y) * (p1.Y - p2.Y)
+	distSquared := delX + delY
+
+	return max(1-distSquared/MAXIMUM_BOID_VISION, 0)
+}
