@@ -44,23 +44,38 @@ func ParseConfigFile(configFilePath string) (Config, error) {
 	// Check logical values of config data
 
 	if config.WindowWidth <= 0 {
-		slog.Error("window width must be positive", "parsedWindowWidth", config.WindowWidth)
+		slog.Error("window width must be positive", "WindowWidth", config.WindowWidth)
 		return config, errors.New("window width must be positive")
 	}
 
 	if config.WindowHeight <= 0 {
-		slog.Error("window height must be positive", "parsedWindowHeight", config.WindowHeight)
+		slog.Error("window height must be positive", "WindowHeight", config.WindowHeight)
 		return config, errors.New("window height must be positive")
 	}
 
 	if config.NumWorkers <= 0 {
-		slog.Error("num workers must be positive", "parsedNumWorkers", config.NumWorkers)
+		slog.Error("num workers must be positive", "NumWorkers", config.NumWorkers)
 		return config, errors.New("num workers must be positive")
 	}
 
 	if config.NumBoids <= 0 {
-		slog.Error("num boids must be positive", "parsedNumBoids", config.NumBoids)
+		slog.Error("num boids must be positive", "NumBoids", config.NumBoids)
 		return config, errors.New("num boids must be positive")
+	}
+
+	if config.BoidVelocity <= 0 {
+		slog.Error("boid velocity must be positive", "BoidVelocity", config.BoidVelocity)
+		return config, errors.New("boid velocity must be positive")
+	}
+
+	if config.BoidVision <= 0 {
+		slog.Error("boid vision must be positive", "BoidVision", config.BoidVision)
+		return config, errors.New("boid vision must be positive")
+	}
+
+	if config.BoidSeparationOptimalProximity < 0 || config.BoidSeparationOptimalProximity > 1 {
+		slog.Error("boid separation optimal proximity must be between 0 and 1", "BoidSeparationOptimalProximity", config.BoidSeparationOptimalProximity)
+		return config, errors.New("boid separation optimal proximity must be between 0 and 1")
 	}
 
 	// --------------------------------------------------------------------------------
