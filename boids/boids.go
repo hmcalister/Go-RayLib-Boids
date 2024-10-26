@@ -11,7 +11,9 @@ const (
 )
 
 var (
-	BOID_COLOR color.RGBA = rl.White
+	BOID_COLOR       color.RGBA = rl.White
+	BOID_SIDE_LENGTH float32    = 8.0
+	BOID_SIDE_ANGLE  float32    = 2.3
 )
 
 type boid struct {
@@ -19,10 +21,10 @@ type boid struct {
 	velocity rl.Vector2
 }
 
-func (b boid) draw(sideLength, angle float32) {
-	side := rl.Vector2Scale(rl.Vector2Normalize(b.velocity), sideLength)
-	v2 := rl.Vector2Add(rl.Vector2Rotate(side, -angle), b.position)
-	v3 := rl.Vector2Add(rl.Vector2Rotate(side, angle), b.position)
+func (b boid) draw() {
+	side := rl.Vector2Scale(rl.Vector2Normalize(b.velocity), BOID_SIDE_LENGTH)
+	v2 := rl.Vector2Add(rl.Vector2Rotate(side, -BOID_SIDE_ANGLE), b.position)
+	v3 := rl.Vector2Add(rl.Vector2Rotate(side, BOID_SIDE_ANGLE), b.position)
 	rl.DrawTriangle(rl.Vector2Add(b.position, side), v2, v3, BOID_COLOR)
 
 	// rl.DrawCircle(int32(b.Position.X), int32(b.Position.Y), 3, rl.Blue)
