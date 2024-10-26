@@ -75,7 +75,7 @@ func (manager *BoidManager) TickBoids() {
 		workerWaitGroup.Add(1)
 		go func() {
 			defer workerWaitGroup.Done()
-			tickBoidWorkerFunc(manager.Boids, updatedBoids, indexChannel)
+			tickBoidWorkerFunc(manager.Boids, updatedBoids, manager.config, indexChannel)
 		}()
 	}
 
@@ -91,7 +91,7 @@ func (manager *BoidManager) TickBoids() {
 	manager.Boids = updatedBoids
 }
 
-func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, indexChannel chan int) {
+func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.Config, indexChannel chan int) {
 	for updateIndex := range indexChannel {
 		targetBoid := currentBoids[updateIndex]
 		targetBoid.position = rl.Vector2Add(targetBoid.position, targetBoid.velocity)
