@@ -92,8 +92,23 @@ func (manager *BoidManager) TickBoids() {
 }
 
 func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.Config, indexChannel chan int) {
+	const windowEdgeSpringConstant float32 = 0.05
 	for updateIndex := range indexChannel {
 		targetBoid := currentBoids[updateIndex]
+
+		// Avoid flying off screen
+		if targetBoid.position.X < WINDOW_EDGE_BUFFER_DISTANCE {
+			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(x_HAT, windowEdgeSpringConstant*(WINDOW_EDGE_BUFFER_DISTANCE-targetBoid.position.X)))
+		} else if targetBoid.position.X > float32(config.WindowWidth)-WINDOW_EDGE_BUFFER_DISTANCE {
+			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(x_HAT, windowEdgeSpringConstant*(float32(config.WindowWidth)-WINDOW_EDGE_BUFFER_DISTANCE-targetBoid.position.X)))
+		}
+
+		if targetBoid.position.Y < WINDOW_EDGE_BUFFER_DISTANCE {
+			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(y_HAT, windowEdgeSpringConstant*(WINDOW_EDGE_BUFFER_DISTANCE-targetBoid.position.Y)))
+		} else if targetBoid.position.Y > float32(config.WindowHeight)-WINDOW_EDGE_BUFFER_DISTANCE {
+			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(y_HAT, windowEdgeSpringConstant*(float32(config.WindowHeight)-WINDOW_EDGE_BUFFER_DISTANCE-targetBoid.position.Y)))
+		}
+
 		targetBoid.position = rl.Vector2Add(targetBoid.position, targetBoid.velocity)
 		updatedBoids[updateIndex] = targetBoid
 	}
