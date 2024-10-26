@@ -114,6 +114,10 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 		// Loop over all (other) boids and calculate the factors for update
 		// Currently, check ALL boids, but perhaps changing this could improve performance...
 		for i := range len(currentBoids) {
+			if i == updateIndex {
+				continue
+			}
+
 		}
 
 		targetBoid.position = rl.Vector2Add(targetBoid.position, targetBoid.velocity)
