@@ -6,10 +6,6 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-const (
-	BOID_INIT_VELOCITY_MAX_MAGNITUDE float32 = 1.0
-)
-
 var (
 	BOID_COLOR       color.RGBA = rl.White
 	BOID_SIDE_LENGTH float32    = 8.0
