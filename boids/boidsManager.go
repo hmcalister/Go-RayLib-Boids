@@ -111,6 +111,11 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(y_HAT, windowEdgeSpringConstant*(float32(config.WindowHeight)-WINDOW_EDGE_BUFFER_DISTANCE-targetBoid.position.Y)))
 		}
 
+		// Loop over all (other) boids and calculate the factors for update
+		// Currently, check ALL boids, but perhaps changing this could improve performance...
+		for i := range len(currentBoids) {
+		}
+
 		targetBoid.position = rl.Vector2Add(targetBoid.position, targetBoid.velocity)
 		updatedBoids[updateIndex] = targetBoid
 	}
