@@ -118,6 +118,15 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 				continue
 			}
 
+			// --------------------------------------------------------------------------------'
+			// Separation
+
+			// --------------------------------------------------------------------------------'
+			// Alignment
+
+			// --------------------------------------------------------------------------------'
+			// Cohesion
+
 		}
 
 		targetBoid.position = rl.Vector2Add(targetBoid.position, targetBoid.velocity)
