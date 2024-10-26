@@ -9,11 +9,17 @@ import (
 )
 
 type Config struct {
-	WindowWidth  int32  `yaml:"WindowWidth"`
-	WindowHeight int32  `yaml:"WindowHeight"`
-	NumBoids     int    `yaml:"NumBoids"`
-	NumWorkers   int    `yaml:"NumWorkers"`
-	RandomSeed   uint64 `yaml:"RandomSeed"`
+	WindowWidth                    int32   `yaml:"WindowWidth"`
+	WindowHeight                   int32   `yaml:"WindowHeight"`
+	NumBoids                       int     `yaml:"NumBoids"`
+	BoidVelocity                   float32 `yaml:"BoidVelocity"`
+	BoidVision                     float32 `yaml:"BoidVision"`
+	BoidSeparationOptimalProximity float32 `yaml:"BoidSeparationOptimalProximity"`
+	BoidSeparationCoefficient      float32 `yaml:"BoidSeparationCoefficient"`
+	BoidAlignmentCoefficient       float32 `yaml:"BoidAlignmentCoefficient"`
+	BoidCohesionCoefficient        float32 `yaml:"BoidCohesionCoefficient"`
+	NumWorkers                     int     `yaml:"NumWorkers"`
+	RandomSeed                     uint64  `yaml:"RandomSeed"`
 }
 
 func ParseConfigFile(configFilePath string) (Config, error) {

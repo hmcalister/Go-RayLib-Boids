@@ -11,23 +11,7 @@ import (
 )
 
 const (
-	WINDOW_EDGE_BUFFER_DISTANCE      float32 = 25.0
-	BOID_INIT_VELOCITY_MAX_MAGNITUDE float32 = 4.0
-
-	// How far two boids can be and still have an effect on one another
-	MAXIMUM_BOID_VISION float32 = 128.0
-
-	// The target proximity measure
-	SEPARATION_OPTIMAL_PROXIMITY_MEASURE float32 = 0.05
-
-	// How strongly boids are affected by the separation factor
-	SEPARATION_COEFFICIENT float32 = 0.5
-
-	// How strongly boids are affected by the alignment factor
-	ALIGNMENT_COEFFICIENT float32 = 0.15
-
-	// How strongly boids are affected by the cohesion factor
-	COHESION_COEFFICIENT float32 = 0.05
+	WINDOW_EDGE_BUFFER_DISTANCE float32 = 25.0
 )
 
 var (
@@ -62,8 +46,8 @@ func NewBoidManager(config config.Config) BoidManager {
 				manager.randomGenerator.Float32()*(float32(config.WindowHeight)-2*WINDOW_EDGE_BUFFER_DISTANCE)+WINDOW_EDGE_BUFFER_DISTANCE,
 			),
 			velocity: rl.NewVector2(
-				(2*manager.randomGenerator.Float32()-1)*BOID_INIT_VELOCITY_MAX_MAGNITUDE,
-				(2*manager.randomGenerator.Float32()-1)*BOID_INIT_VELOCITY_MAX_MAGNITUDE,
+				(2*manager.randomGenerator.Float32()-1)*config.BoidVelocity,
+				(2*manager.randomGenerator.Float32()-1)*config.BoidVelocity,
 			),
 		}
 
@@ -137,7 +121,7 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 			}
 
 			otherBoid := currentBoids[i]
-			proximity := boidProximityMeasure(targetBoid.position, otherBoid.position)
+			proximity := boidProximityMeasure(targetBoid.position, otherBoid.position, config.BoidVision)
 			if proximity == 0.0 {
 				continue
 			}
@@ -146,12 +130,18 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 			// Separation
 
 			delPositionUnitVector := rl.Vector2Normalize(rl.Vector2Subtract(otherBoid.position, targetBoid.position))
-			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(delPositionUnitVector, SEPARATION_COEFFICIENT*(SEPARATION_OPTIMAL_PROXIMITY_MEASURE-proximity)))
+			targetBoid.velocity = rl.Vector2Add(
+				targetBoid.velocity,
+				rl.Vector2Scale(
+					delPositionUnitVector,
+					config.BoidSeparationCoefficient*(config.BoidSeparationOptimalProximity-proximity),
+				),
+			)
 
 			// --------------------------------------------------------------------------------
 			// Alignment
 
-			targetBoid.velocity = rl.Vector2Lerp(targetBoid.velocity, otherBoid.velocity, ALIGNMENT_COEFFICIENT)
+			targetBoid.velocity = rl.Vector2Lerp(targetBoid.velocity, otherBoid.velocity, config.BoidAlignmentCoefficient)
 
 			// --------------------------------------------------------------------------------
 			// Cohesion (Calculated)
@@ -166,13 +156,13 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 		if numProximalBoids != 0 {
 			centerOfMassOfProximalBoids = rl.Vector2Scale(centerOfMassOfProximalBoids, 1.0/numProximalBoids)
 			delPositionToCenterOfMassUnitVector := rl.Vector2Normalize(rl.Vector2Subtract(centerOfMassOfProximalBoids, targetBoid.position))
-			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(delPositionToCenterOfMassUnitVector, COHESION_COEFFICIENT))
+			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(delPositionToCenterOfMassUnitVector, config.BoidCohesionCoefficient))
 		}
 
 		// --------------------------------------------------------------------------------
 		// Decay velocity (down to a point)
 
-		targetBoid.velocity = rl.Vector2Lerp(targetBoid.velocity, rl.Vector2Scale(rl.Vector2Normalize(targetBoid.velocity), BOID_INIT_VELOCITY_MAX_MAGNITUDE), 0.05)
+		targetBoid.velocity = rl.Vector2Lerp(targetBoid.velocity, rl.Vector2Scale(rl.Vector2Normalize(targetBoid.velocity), config.BoidVelocity), 0.05)
 
 		targetBoid.position = rl.Vector2Add(targetBoid.position, targetBoid.velocity)
 		updatedBoids[updateIndex] = targetBoid
@@ -182,11 +172,11 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 // Calculate the proximity of two boids with position p1, p2.
 // The measure is bound between 0 and 1.
 // 0 means the boids are not near one another, 1 means the boids are at the same position.
-func boidProximityMeasure(p1, p2 rl.Vector2) float32 {
+func boidProximityMeasure(p1, p2 rl.Vector2, maxVision float32) float32 {
 
 	delX := (p1.X - p2.X) * (p1.X - p2.X)
 	delY := (p1.Y - p2.Y) * (p1.Y - p2.Y)
 	distSquared := delX + delY
 
-	return max(1-distSquared/MAXIMUM_BOID_VISION, 0)
+	return max(1-distSquared/maxVision, 0)
 }
