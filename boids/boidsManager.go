@@ -160,6 +160,15 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 			centerOfMassOfProximalBoids = rl.Vector2Add(centerOfMassOfProximalBoids, otherBoid.position)
 		}
 
+		// --------------------------------------------------------------------------------
+		// Cohesion (Applied)
+
+		if numProximalBoids != 0 {
+			centerOfMassOfProximalBoids = rl.Vector2Scale(centerOfMassOfProximalBoids, 1.0/numProximalBoids)
+			delPositionToCenterOfMassUnitVector := rl.Vector2Normalize(rl.Vector2Subtract(centerOfMassOfProximalBoids, targetBoid.position))
+			targetBoid.velocity = rl.Vector2Add(targetBoid.velocity, rl.Vector2Scale(delPositionToCenterOfMassUnitVector, COHESION_COEFFICIENT))
+		}
+
 		targetBoid.position = rl.Vector2Add(targetBoid.position, targetBoid.velocity)
 		updatedBoids[updateIndex] = targetBoid
 	}
