@@ -27,5 +27,5 @@ func (b boid) draw() {
 	v3 := rl.Vector2Add(rl.Vector2Rotate(side, BOID_SIDE_ANGLE), b.position)
 	rl.DrawTriangle(rl.Vector2Add(b.position, side), v2, v3, BOID_COLOR)
 
-	// rl.DrawCircle(int32(b.Position.X), int32(b.Position.Y), 3, rl.Blue)
+	// rl.DrawCircle(int32(b.position.X), int32(b.position.Y), 3, rl.Blue)
 }
