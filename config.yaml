@@ -1,7 +1,5 @@
 WindowWidth: 1600
 WindowHeight: 1000
-NumBoids: 256
-BoidSideLength: 8.0
-BoidSideAngle: 2.3
+NumBoids: 512
 NumWorkers: 12
 RandomSeed: 0

@@ -9,13 +9,11 @@ import (
 )
 
 type Config struct {
-	WindowWidth    int32   `yaml:"WindowWidth"`
-	WindowHeight   int32   `yaml:"WindowHeight"`
-	NumBoids       int     `yaml:"NumBoids"`
-	BoidSideLength float32 `yaml:"BoidSideLength"`
-	BoidSideAngle  float32 `yaml:"BoidSideAngle"`
-	NumWorkers     int     `yaml:"NumWorkers"`
-	RandomSeed     uint64  `yaml:"RandomSeed"`
+	WindowWidth  int32  `yaml:"WindowWidth"`
+	WindowHeight int32  `yaml:"WindowHeight"`
+	NumBoids     int    `yaml:"NumBoids"`
+	NumWorkers   int    `yaml:"NumWorkers"`
+	RandomSeed   uint64 `yaml:"RandomSeed"`
 }
 
 func ParseConfigFile(configFilePath string) (Config, error) {
@@ -57,11 +55,6 @@ func ParseConfigFile(configFilePath string) (Config, error) {
 	if config.NumBoids <= 0 {
 		slog.Error("num boids must be positive", "parsedNumBoids", config.NumBoids)
 		return config, errors.New("num boids must be positive")
-	}
-
-	if config.BoidSideLength <= 0 {
-		slog.Error("boid side length must be positive", "parsedNumBoids", config.NumBoids)
-		return config, errors.New("boid side length must be positive")
 	}
 
 	// --------------------------------------------------------------------------------
