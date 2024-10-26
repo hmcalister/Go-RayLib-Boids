@@ -136,7 +136,13 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 				continue
 			}
 
-			// --------------------------------------------------------------------------------'
+			otherBoid := currentBoids[i]
+			proximity := boidProximityMeasure(targetBoid.position, otherBoid.position)
+			if proximity == 0.0 {
+				continue
+			}
+
+			// --------------------------------------------------------------------------------
 			// Separation
 
 			// --------------------------------------------------------------------------------'
