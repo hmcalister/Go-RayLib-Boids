@@ -11,6 +11,7 @@ import (
 )
 
 const (
+	WINDOW_EDGE_BUFFER_DISTANCE      float32 = 25.0
 	BOID_INIT_VELOCITY_MAX_MAGNITUDE float32 = 3.0
 )
 
@@ -42,8 +43,8 @@ func NewBoidManager(config config.Config) BoidManager {
 	for i := range config.NumBoids {
 		manager.Boids[i] = boid{
 			position: rl.NewVector2(
-				manager.randomGenerator.Float32()*float32(config.WindowWidth),
-				manager.randomGenerator.Float32()*float32(config.WindowHeight),
+				manager.randomGenerator.Float32()*(float32(config.WindowWidth)-2*WINDOW_EDGE_BUFFER_DISTANCE)+WINDOW_EDGE_BUFFER_DISTANCE,
+				manager.randomGenerator.Float32()*(float32(config.WindowHeight)-2*WINDOW_EDGE_BUFFER_DISTANCE)+WINDOW_EDGE_BUFFER_DISTANCE,
 			),
 			velocity: rl.NewVector2(
 				(2*manager.randomGenerator.Float32()-1)*BOID_INIT_VELOCITY_MAX_MAGNITUDE,
