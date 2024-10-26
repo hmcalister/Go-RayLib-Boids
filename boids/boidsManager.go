@@ -128,6 +128,9 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 
 		// Loop over all (other) boids and calculate the factors for update
 		// Currently, check ALL boids, but perhaps changing this could improve performance...
+
+		numProximalBoids := float32(0.0)
+		centerOfMassOfProximalBoids := rl.Vector2Zero()
 		for i := range len(currentBoids) {
 			if i == updateIndex {
 				continue
