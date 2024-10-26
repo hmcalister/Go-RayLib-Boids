@@ -10,6 +10,9 @@ import (
 	"golang.org/x/exp/rand"
 )
 
+const (
+	BOID_INIT_VELOCITY_MAX_MAGNITUDE float32 = 3.0
+)
 type BoidManager struct {
 	Boids           []boid
 	randomGenerator *rand.Rand
