@@ -12,7 +12,22 @@ import (
 
 const (
 	WINDOW_EDGE_BUFFER_DISTANCE      float32 = 25.0
-	BOID_INIT_VELOCITY_MAX_MAGNITUDE float32 = 3.0
+	BOID_INIT_VELOCITY_MAX_MAGNITUDE float32 = 4.0
+
+	// How far two boids can be and still have an effect on one another
+	MAXIMUM_BOID_VISION float32 = 128.0
+
+	// The target proximity measure
+	SEPARATION_OPTIMAL_PROXIMITY_MEASURE float32 = 0.05
+
+	// How strongly boids are affected by the separation factor
+	SEPARATION_COEFFICIENT float32 = 0.5
+
+	// How strongly boids are affected by the alignment factor
+	ALIGNMENT_COEFFICIENT float32 = 0.15
+
+	// How strongly boids are affected by the cohesion factor
+	COHESION_COEFFICIENT float32 = 0.05
 )
 
 var (
