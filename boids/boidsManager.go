@@ -151,8 +151,7 @@ func tickBoidWorkerFunc(currentBoids []boid, updatedBoids []boid, config config.
 			// --------------------------------------------------------------------------------
 			// Alignment
 
-			// --------------------------------------------------------------------------------'
-			// Cohesion
+			targetBoid.velocity = rl.Vector2Lerp(targetBoid.velocity, otherBoid.velocity, ALIGNMENT_COEFFICIENT)
 
 		}
 
